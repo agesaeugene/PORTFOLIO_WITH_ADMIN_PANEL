@@ -4,8 +4,8 @@ import { defineConfig } from "vite"
  
 export default defineConfig({
   plugins: [react()],
-  //base: process.env.VITE_BASE_PATH || "/PORTFOLIO_WITH_ADMIN_PANEL/portfolio",
-  base: "/",
+  base: process.env.VITE_BASE_PATH || "/PORTFOLIO_WITH_ADMIN_PANEL/portfolio",
+  //base: "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
