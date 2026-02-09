@@ -44,4 +44,21 @@ app.use("/api/v1/project", projectRouter);
 dbConnection(process.env.MONGO_URI);
 app.use(errorMiddleware);
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    messgae: "API is running successfully"
+  });
+});
+
+app.all("*", (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `Route ${req.originalUrl} not found`
+  });
+});
+
+dbConnection(process.env.MONGO_URI);
+app.use(errorMiddleware);
+
 export default app;
