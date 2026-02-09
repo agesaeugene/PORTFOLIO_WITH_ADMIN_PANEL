@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Add this at the top - API base URL from environment variable
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
-
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -62,9 +59,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = false;
       state.user = {};
-      if (action.payload !== null) {
-        state.error = action.payload;
-      }
+      state.error = action.payload;
     },
     updatePasswordRequest(state, action) {
       state.loading = true;
@@ -109,6 +104,7 @@ const userSlice = createSlice({
     },
     clearAllErrors(state, action) {
       state.error = null;
+      state = state.user;
     },
   },
 });
@@ -117,47 +113,40 @@ export const login = (email, password) => async (dispatch) => {
   dispatch(userSlice.actions.loginRequest());
   try {
     const { data } = await axios.post(
-      `${API_BASE_URL}/api/v1/user/login`,  // ✅ Changed
+      "https://portfolio-with-admin-panel-9app.onrender.com/api/v1/user/login",
       { email, password },
       { withCredentials: true, headers: { "Content-Type": "application/json" } }
     );
     dispatch(userSlice.actions.loginSuccess(data.user));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    const errorMessage = error.response?.data?.message || error.message || "Login failed";
-    dispatch(userSlice.actions.loginFailed(errorMessage));
+    dispatch(userSlice.actions.loginFailed(error.response.data.message));
   }
 };
 
 export const getUser = () => async (dispatch) => {
   dispatch(userSlice.actions.loadUserRequest());
   try {
-    const { data } = await axios.get(`${API_BASE_URL}/api/v1/user/me`, {  // ✅ Changed
+    const { data } = await axios.get("https://portfolio-with-admin-panel-9app.onrender.com/api/v1/user/me", {
       withCredentials: true,
     });
     dispatch(userSlice.actions.loadUserSuccess(data.user));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    if (error.response && (error.response.status === 401 || error.response.status === 400)) {
-      dispatch(userSlice.actions.loadUserFailed(null));
-    } else {
-      const errorMessage = error.response?.data?.message || error.message || "Failed to load user";
-      dispatch(userSlice.actions.loadUserFailed(errorMessage));
-    }
+    dispatch(userSlice.actions.loadUserFailed(error.response.data.message));
   }
 };
 
 export const logout = () => async (dispatch) => {
   try {
     const { data } = await axios.get(
-      `${API_BASE_URL}/api/v1/user/logout`,  // ✅ Changed
+      "https://portfolio-with-admin-panel-9app.onrender.com/api/v1/user/logout",
       { withCredentials: true }
     );
     dispatch(userSlice.actions.logoutSuccess(data.message));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    const errorMessage = error.response?.data?.message || error.message || "Logout failed";
-    dispatch(userSlice.actions.logoutFailed(errorMessage));
+    dispatch(userSlice.actions.logoutFailed(error.response.data.message));
   }
 };
 
@@ -166,7 +155,7 @@ export const updatePassword =
     dispatch(userSlice.actions.updatePasswordRequest());
     try {
       const { data } = await axios.put(
-        `${API_BASE_URL}/api/v1/user/password/update`,  // ✅ Changed
+        "https://portfolio-with-admin-panel-9app.onrender.com/api/v1/user/password/update",
         { currentPassword, newPassword, confirmNewPassword },
         {
           withCredentials: true,
@@ -176,8 +165,9 @@ export const updatePassword =
       dispatch(userSlice.actions.updatePasswordSuccess(data.message));
       dispatch(userSlice.actions.clearAllErrors());
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message || "Password update failed";
-      dispatch(userSlice.actions.updatePasswordFailed(errorMessage));
+      dispatch(
+        userSlice.actions.updatePasswordFailed(error.response.data.message)
+      );
     }
   };
 
@@ -185,7 +175,7 @@ export const updateProfile = (data) => async (dispatch) => {
   dispatch(userSlice.actions.updateProfileRequest());
   try {
     const response = await axios.put(
-      `${API_BASE_URL}/api/v1/user/me/profile/update`,  // ✅ Changed
+      "https://portfolio-with-admin-panel-9app.onrender.com/api/v1/user/me/profile/update",
       data,
       {
         withCredentials: true,
@@ -195,15 +185,14 @@ export const updateProfile = (data) => async (dispatch) => {
     dispatch(userSlice.actions.updateProfileSuccess(response.data.message));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    const errorMessage = error.response?.data?.message || error.message || "Profile update failed";
-    dispatch(userSlice.actions.updateProfileFailed(errorMessage));
+    dispatch(
+      userSlice.actions.updateProfileFailed(error.response.data.message)
+    );
   }
 };
-
 export const resetProfile = () => (dispatch) => {
   dispatch(userSlice.actions.updateProfileResetAfterUpdate());
 };
-
 export const clearAllUserErrors = () => (dispatch) => {
   dispatch(userSlice.actions.clearAllErrors());
 };
