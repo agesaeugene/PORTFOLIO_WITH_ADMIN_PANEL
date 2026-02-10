@@ -42,8 +42,6 @@ app.use("/api/v1/softwareapplication", softwareApplicationRouter);
 app.use("/api/v1/project", projectRouter);
 
 dbConnection(process.env.MONGO_URI);
-app.use(errorMiddleware);
-
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
