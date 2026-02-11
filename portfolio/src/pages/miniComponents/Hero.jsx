@@ -21,7 +21,7 @@ const Hero = () => {
     const getMyProfile = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:4000/api/v1/user/portfolio/me",
+          "https://portfolio-with-admin-panel-9app.onrender.com/api/v1/user/portfolio/me",
           { withCredentials: true }
         );
         setUser(data.user);

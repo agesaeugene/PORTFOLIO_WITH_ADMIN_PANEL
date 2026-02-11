@@ -19,7 +19,7 @@ const ProjectView = () => {
   useEffect(() => {
     const getProject = async () => {
       await axios
-        .get(`https://mern-stack-portfolio-backend-code.onrender.com/api/v1/project/get/${id}`, {
+        .get(`https://portfolio-with-admin-panel-9app.onrender.com/api/v1/project/get/${id}`, {
           withCredentials: true,
         })
         .then((res) => {
