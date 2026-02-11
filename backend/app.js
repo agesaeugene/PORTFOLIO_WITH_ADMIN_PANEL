@@ -17,7 +17,12 @@ dotenv.config({ path: "./config/config.env" });
 
 app.use(
   cors({
-    origin: [process.env.PORTFOLIO_URL, process.env.DASHBOARD_URL],
+    origin: [process.env.PORTFOLIO_URL, 
+      process.env.DASHBOARD_URL,
+      "https://eugenedevs.me",
+      "https://www.eugenedevs.me",
+      "https://vercel.com/eugene-agesas-projects/portfolio-with-admin-panel-dzd6/2oZU6FngUyAsWRR362gB5Uqfcxp4",
+      "http://localhost:5173",],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     credentials: true,
   })
