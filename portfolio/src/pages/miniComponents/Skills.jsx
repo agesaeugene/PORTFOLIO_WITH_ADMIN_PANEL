@@ -8,7 +8,7 @@ const Skills = () => {
     const getMySkills = async () => {
       const { data } = await axios.get(
         //"https://localhost:4000/api/v1/skill/getall",
-        "https://portfolio-with-admin-panel-9app.onrender.com/api/v1/skill/getall",
+        `${import.meta.env.VITE_API_URL}/api/v1/skill/getall`,
         { withCredentials: true }
       );
       setSkills(data.skills);
