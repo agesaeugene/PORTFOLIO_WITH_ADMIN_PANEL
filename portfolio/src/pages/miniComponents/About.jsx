@@ -32,19 +32,29 @@ const About = () => {
           </div>
           <div className="flex justify-center flex-col tracking-[1px] text-xl gap-5">
             <p>
-              My name is Eugene Agesa, but my followers call me Zeeshu. I will
-              graduate in Software Engineering from SMIU around 2024. I work as
-              a web developer and freelancer. My hobbies include watching
-              movies, series, playing video games, and occasionally cooking.
+              My name is Eugene Agesa,Eugene Agesa, a passionate and disciplined Software Developer 
+              and a Bachelor of Science student Software Engineering at 
+              Zetech University. I love working as a web developer and freelancer. My hobbies include watching
+              movies, series, playing video games, and occasionally cooking. I specialize in building modern, scalable web applications that solve 
+              real-world problems and create meaningful user experiences.
             </p>
             <p>
-              I have interests not only in technology but also in movies,
-              series, video games, and cooking. I excel in meeting deadlines for
+              My core expertise lies in backend and full-stack development, with hands-on experience
+               using Python (Flask & Django), Java, JavaScript, Svelte/SvelteKit, and modern database 
+               systems such as PostgreSQL and MongoDB. I enjoy designing clean system architectures, 
+               implementing secure authentication flows, and building data-driven applications with a 
+               strong emphasis on performance, usability, and maintainability. I excel in meeting deadlines for
               my work.
+
             </p>
           </div>
         </div>
         <p className="tracking-[1px] text-xl">
+          I am deeply committed to continuous learning and long-term excellence in software engineering. 
+          I follow a disciplined, goal-oriented approach to growth, consistently sharpening my problem-solving skills
+           through algorithmic challenges (LeetCode), system design, and hands-on project development. My long-term objective
+            is to become a world-class software engineer, capable of designing impactful products, leading technical initiatives
+             and delivering high-quality solutions at scale.
           My dedication and perseverance in timely delivery of work are integral
           to me. I maintain the courage to face any challenges for extended
           periods.
