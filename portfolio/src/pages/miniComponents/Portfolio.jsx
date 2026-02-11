@@ -11,7 +11,7 @@ const Portfolio = () => {
     const getMyProjects = async () => {
       const { data } = await axios.get(
         //"https://localhost:4000/api/v1/project/getall",
-        "http://localhost:4000/api/v1/project/getall",
+        `${import.meta.env.VITE_API_URL}/project/getall`,
         { withCredentials: true }
       );
       setProjects(data.projects);
