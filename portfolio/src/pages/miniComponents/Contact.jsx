@@ -10,106 +10,132 @@ const Contact = () => {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
   const handleMessage = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await axios
-      .post(
+    try {
+      const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/v1/message/send`,
         { senderName, subject, message },
-        {
-          withCredentials: true,
-          headers: { "Content-Type": "application/json" },
-        }
-      )
-      .then((res) => {
-        toast.success(res.data.message);
-        setSenderName("");
-        setSubject("");
-        setMessage("");
-        setLoading(false);
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-        setLoading(false);
-      });
+        { withCredentials: true, headers: { "Content-Type": "application/json" } }
+      );
+      toast.success(res.data.message);
+      setSenderName("");
+      setSubject("");
+      setMessage("");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
-    <>
-      <div className="overflow-x-hidden">
-        <div className="relative mb-8">
-          <h1
-            className="flex gap-4 items-center text-[1.85rem] sm:text-[2.75rem] md:text-[3rem] 
-            lg:text-[3rem] leading-[56px] md:leading-[67px] lg:leading-[90px] 
-            tracking-[15px] mx-auto w-fit font-extrabold about-h1"
-            style={{
-              background: "hsl(222.2 84% 4.9%)",
-            }}
-          >
-            CONTACT
-            <span className="text-tubeLight-effect font-extrabold">ME</span>
-          </h1>
-          <span className="absolute w-full h-1 top-7 sm:top-7 
-          md:top-8 lg:top-11 z-[-1] bg-slate-200"></span>
-        </div>
-        <form onSubmit={handleMessage} className="flex flex-col gap-6">
-          <div className="flex flex-col gap-2 px-1.5">
-            <Label className="text-xl">Your Name</Label>
-            <Input
-              value={senderName}
-              onChange={(e) => setSenderName(e.target.value)}
-              placeholder="Your Name"
-            />
-          </div>
-          <div className="flex flex-col gap-2 px-1.5">
-            <Label className="text-xl">Subject</Label>
-            <Input
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              placeholder="Subject"
-            />
-          </div>
-          <div className="flex flex-col gap-2 px-1.5">
-            <Label className="text-xl">Message</Label>
-            <Input
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Your Message"
-            />
-          </div>
-          <div className="flex justify-end">
-            {!loading ? (
-              <Button className="w-full sm:w-52">SEND MESSAGE</Button>
-            ) : (
-              <button
-                disabled
-                type="button"
-                className="w-full sm:w-52 text-slate-900  bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-white dark:hover:bg-slate-200 dark:focus:ring-blue-800 inline-flex items-center"
-              >
-                <svg
-                  aria-hidden="true"
-                  role="status"
-                  class="inline w-4 h-4 me-3 text-slate-950 animate-spin"
-                  viewBox="0 0 100 101"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                    fill="#E5E7EB"
-                  />
-                  <path
-                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                    fill="currentColor"
-                  />
-                </svg>
-                Sending...
-              </button>
-            )}
-          </div>
-        </form>
+    <div className="w-full overflow-x-hidden">
+      {/* Heading */}
+      <div className="relative mb-12">
+        <h1
+          className="flex gap-4 items-center text-[1.85rem] sm:text-[2.75rem] md:text-[3rem]
+          lg:text-[3rem] leading-[56px] md:leading-[67px] lg:leading-[90px]
+          tracking-[15px] mx-auto w-fit font-extrabold about-h1"
+          style={{ background: "hsl(222.2 84% 4.9%)" }}
+        >
+          CONTACT
+          <span className="text-tubeLight-effect font-extrabold">ME</span>
+        </h1>
+        <span className="absolute w-full h-1 top-7 sm:top-7 md:top-8 lg:top-11 z-[-1] bg-slate-200 dark:bg-white/10" />
       </div>
-    </>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        {/* Left: CTA copy */}
+        <div className="flex flex-col gap-6">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white leading-tight">
+            Let's build something{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500">
+              amazing.
+            </span>
+          </h2>
+          <p className="text-slate-500 text-lg leading-relaxed">
+            Whether you have a project in mind or just want to say hello, my inbox is always open.
+          </p>
+          <div className="flex flex-col gap-3 text-slate-600 dark:text-slate-400">
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-500">✉</span>
+              <span>eugeneagesa734@gmail.com</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-500">📍</span>
+              <span>Nairobi, Kenya</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Form */}
+        <div className="bg-white dark:bg-slate-950 p-8 rounded-3xl border border-slate-200 dark:border-white/10 shadow-xl">
+          <form onSubmit={handleMessage} className="flex flex-col gap-5">
+            <div className="flex flex-col gap-2">
+              <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Your Name</Label>
+              <Input
+                value={senderName}
+                onChange={(e) => setSenderName(e.target.value)}
+                placeholder="John Doe"
+                required
+                className="rounded-xl bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 focus:border-blue-500 focus:ring-blue-500/20 transition-all"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Subject</Label>
+              <Input
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                placeholder="Project Inquiry"
+                required
+                className="rounded-xl bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 focus:border-blue-500 focus:ring-blue-500/20 transition-all"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Message</Label>
+              <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Tell me about your project..."
+                rows={4}
+                required
+                className="w-full px-4 py-3 rounded-xl text-sm bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 outline-none transition-all resize-none dark:text-white placeholder:text-slate-400"
+              />
+            </div>
+            <div className="flex justify-end pt-1">
+              {!loading ? (
+                <Button
+                  type="submit"
+                  className="w-full sm:w-auto px-10 rounded-full bg-slate-900 dark:bg-white text-white dark:text-black hover:scale-105 transition-transform shadow-lg font-semibold"
+                >
+                  Send Message ✉
+                </Button>
+              ) : (
+                <button
+                  disabled
+                  type="button"
+                  className="w-full sm:w-auto px-10 rounded-full bg-slate-100 dark:bg-white/10 text-slate-400 dark:text-slate-500 font-semibold flex items-center justify-center gap-2 cursor-not-allowed"
+                >
+                  <svg
+                    className="w-4 h-4 animate-spin"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                  </svg>
+                  Sending...
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

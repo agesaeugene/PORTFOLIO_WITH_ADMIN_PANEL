@@ -1,50 +1,69 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+
+const TimelineItem = ({ item, index }) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <li
+      ref={ref}
+      className="relative pl-10 md:pl-14 group"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(24px)",
+        transition: `opacity 0.6s ease ${index * 120}ms, transform 0.6s ease ${index * 120}ms`,
+      }}
+    >
+      {/* Dot */}
+      <span className="absolute -left-[5px] top-2 w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-blue-500 transition-colors duration-200 ring-4 ring-transparent group-hover:ring-blue-500/20 z-10" />
+
+      <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950 hover:border-blue-500/50 hover:-translate-y-0.5 hover:shadow-lg dark:hover:shadow-blue-900/10 transition-all duration-200">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">
+            {item.title}
+          </h3>
+          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-slate-400 w-fit uppercase tracking-wide">
+            {item.timeline.from} {item.timeline.to ? `→ ${item.timeline.to}` : "→ Present"}
+          </span>
+        </div>
+        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+          {item.description}
+        </p>
+      </div>
+    </li>
+  );
+};
 
 const Timeline = () => {
   const [timeline, setTimeline] = useState([]);
+
   useEffect(() => {
-    const getMyTimeline = async () => {
-      const { data } = await axios.get(
-        //"https://mern-stack-portfolio-backend-code.onrender.com/api/v1/timeline/getall",
-        `${import.meta.env.VITE_API_URL}/api/v1/timeline/getall`,
-        { withCredentials: true }
-      );
-      setTimeline(data.timelines);
-    };
-    getMyTimeline();
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/api/v1/timeline/getall`, { withCredentials: true })
+      .then(({ data }) => setTimeline(data.timelines || []))
+      .catch(console.error);
   }, []);
+
   return (
-    <div>
-    <h1 className="overflow-x-hidden text-[2rem] sm:text-[1.75rem] md:text-[2.2rem] lg:text-[2.8rem] mb-4 font-extrabold">Timeline</h1>
-      <ol className="relative border-s border-gray-200 dark:border-gray-700">
-        {timeline &&
-          timeline.map((element) => {
-            return (
-              <li className="mb-10 ms-6" key={element._id}>
-                <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                  <svg
-                    className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                  </svg>
-                </span>
-                <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  {element.title}
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                  {element.timeline.from} - {element.timeline.to ? element.timeline.to : "Present"}
-                </time>
-                <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  {element.description}
-                </p>
-              </li>
-            );
-          })}
+    <div className="w-full flex flex-col gap-8">
+      <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold tracking-tight text-slate-900 dark:text-white">
+        Timeline<span className="text-blue-500">.</span>
+      </h1>
+
+      <ol className="relative border-l-2 border-slate-200 dark:border-white/10 ml-2 md:ml-6 space-y-6">
+        {timeline.map((item, i) => (
+          <TimelineItem key={item._id} item={item} index={i} />
+        ))}
       </ol>
     </div>
   );
