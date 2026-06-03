@@ -18,18 +18,6 @@ const BentoCard = ({ children, className = "", style = {} }) => {
   }, []);
 
   return (
-<<<<<<< HEAD
-    <div
-      ref={cardRef}
-      className={`relative overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-blue-900/10 bento-card ${className}`}
-      style={style}
-    >
-      {/* Spotlight overlay */}
-      <div className="pointer-events-none absolute inset-0 z-20 opacity-0 hover-spotlight transition-opacity duration-300 rounded-3xl"
-        style={{ background: "radial-gradient(400px circle at var(--mx,50%) var(--my,50%), rgba(37,99,235,0.08), transparent 60%)" }}
-      />
-      {children}
-=======
     <div className="w-full flex flex-col overflow-x-hidden">
       <div className="relative">
         <h1
@@ -88,7 +76,6 @@ const BentoCard = ({ children, className = "", style = {} }) => {
           periods.
         </p>
       </div>
->>>>>>> 6382ae4 (updated cookies to being sent cross-origin in production)
     </div>
   );
 };
