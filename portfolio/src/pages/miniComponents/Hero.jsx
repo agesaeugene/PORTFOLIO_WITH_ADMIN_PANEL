@@ -91,7 +91,7 @@ const Hero = () => {
         <div className="overflow-hidden hero-heading-line" style={{ animationDelay: "0.15s" }}>
           <h2 className="text-[1.1rem] sm:text-[1.4rem] md:text-[1.75rem] tracking-[8px] font-bold text-slate-500 dark:text-slate-400">
             <Typewriter
-              words={["FULLSTACK DEVELOPER", "TECH ENTHUSIAST", "FREELANCER", "OPEN SOURCE CONTRIBUTOR"]}
+              words={["FULLSTACK DEVELOPER", "PENETRATION TESTER", "TECH ENTHUSIAST", "FREELANCER", "OPEN SOURCE CONTRIBUTOR"]}
               loop={50}
               cursor
               typeSpeed={65}
