@@ -126,7 +126,7 @@ const Portfolio = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/project/getall`, { withCredentials: true })
+      .get(`${import.meta.env.VITE_API_URL}/api/v1/project/getall`, { withCredentials: true })
       .then(({ data }) => setProjects(data.projects || []))
       .catch(console.error);
   }, []);
