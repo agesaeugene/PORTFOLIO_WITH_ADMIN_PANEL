@@ -13,7 +13,7 @@ const ProjectView = () => {
   useEffect(() => {
     axios
       .get(
-        `${import.meta.env.VITE_API_URL}/project/get/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/v1/project/get/${id}`,
         { withCredentials: true }
       )
       .then(({ data }) => setProject(data.project))
