@@ -146,7 +146,7 @@ const Hero = () => {
           {[
             { to: user?.youtubeURL || "https://www.youtube.com", icon: <Youtube className="w-5 h-5 text-red-500" /> },
             { to: user?.instagramURL || "https://instagram.com/eugenedevops", icon: <Instagram className="w-5 h-5 text-pink-500" /> },
-            { to: user?.facebookURL || "https://www.reddit.com/user/Dizzy_Blacksmith7686/", icon: <Facebook className="w-5 h-5 text-blue-700" /> },
+            { to: user?.redditURL || "https://www.reddit.com/user/Dizzy_Blacksmith7686/", icon: <RedditIcon className="w-5 h-5 text-orange-500" /> },
             { to: user?.linkedInURL || "https://www.linkedin.com/in/eugene-agesa-a7062840b/", icon: <Linkedin className="w-5 h-5 text-sky-500" /> },
             { to: user?.twitterURL || "#", icon: <Twitter className="w-5 h-5 text-blue-400" /> },
           ].map((s, i) => (
