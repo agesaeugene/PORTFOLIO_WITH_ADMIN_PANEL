@@ -79,7 +79,7 @@ const Contact = () => {
               <Input
                 value={senderName}
                 onChange={(e) => setSenderName(e.target.value)}
-                placeholder="John Doe"
+                placeholder="John Brillant"
                 required
                 className="rounded-xl bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 focus:border-blue-500 focus:ring-blue-500/20 transition-all"
               />

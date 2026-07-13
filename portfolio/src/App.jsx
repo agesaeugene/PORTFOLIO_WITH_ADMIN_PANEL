@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ProjectView from "./pages/ProjectView";
+import Certifications from "./pages/Certifications";
 import Navbar from "./pages/miniComponents/Navbar";
 import Footer from "./pages/miniComponents/Footer";
 import { ToastContainer } from "react-toastify";
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/project/:id" element={<ProjectView />} />
             <Route path="*" element={<Home />} />
+            <Route path="/certifications" element={<Certifications />} />            
           </Routes>
         </main>
         <Footer />

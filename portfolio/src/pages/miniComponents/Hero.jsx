@@ -1,7 +1,6 @@
 import {
   Award,
   ExternalLink,
-  Facebook,
   Github,
   Instagram,
   Linkedin,
@@ -13,6 +12,12 @@ import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+
+const RedditIcon = ({ className }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M12 2C6.477 2 2 6.477 2 12c0 2.936 1.266 5.577 3.283 7.41l-.708 2.573a.5.5 0 0 0 .686.588l2.784-1.24A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm5.5 9.6c.552 0 1 .448 1 1a1 1 0 0 1-.516.874c.01.11.016.222.016.336 0 2.21-2.686 4-6 4s-6-1.79-6-4c0-.114.006-.226.016-.336A1 1 0 1 1 6.5 12.6c0-.607.28-1.15.72-1.53a3.1 3.1 0 0 1 1.674-.665l.554-2.492a.4.4 0 0 1 .478-.303l1.86.4a1.15 1.15 0 1 1-.132.618l-1.6-.343-.462 2.076a3.1 3.1 0 0 1 1.876.667c.44.38.72.923.72 1.53zm-7 1.4a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-5.5 3.05c-.276 0-.5.196-.5.437 0 .724 1.12 1.313 2.5 1.313s2.5-.589 2.5-1.313c0-.24-.224-.437-.5-.437a.46.46 0 0 0-.317.126c-.213.365-.926.624-1.683.624s-1.47-.26-1.683-.624a.46.46 0 0 0-.317-.126z" />
+  </svg>
+);
 
 const Hero = () => {
   const [user, setUser] = useState(null);
@@ -110,13 +115,13 @@ const Hero = () => {
 
         {/* CTA buttons */}
         <div className="flex flex-wrap gap-3 hero-buttons">
-          <Link to={user?.githubURL || "#"} target="_blank">
+          <Link to={user?.githubURL || "https://github.com/Eugeneagesa734"} target="_blank">
             <Button className="rounded-full px-6 flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-black hover:scale-105 transition-transform shadow-lg">
               <Github className="w-4 h-4" />
               <span>GitHub</span>
             </Button>
           </Link>
-          <Link to={user?.resume?.url || "#"} target="_blank">
+          <Link to={user?.resume?.url || "https://drive.google.com/file/d/1JRAIPR8HUKdgszoIqxg7Lu51LpLE-PxU/view?usp=sharing"} target="_blank">
             <Button
               variant="outline"
               className="rounded-full px-6 flex items-center gap-2 hover:scale-105 transition-transform"
@@ -140,9 +145,9 @@ const Hero = () => {
         <div className="flex items-center gap-4 hero-buttons" style={{ animationDelay: "0.9s" }}>
           {[
             { to: user?.youtubeURL || "https://www.youtube.com", icon: <Youtube className="w-5 h-5 text-red-500" /> },
-            { to: user?.instagramURL || "#", icon: <Instagram className="w-5 h-5 text-pink-500" /> },
-            { to: user?.facebookURL || "#", icon: <Facebook className="w-5 h-5 text-blue-700" /> },
-            { to: user?.linkedInURL || "#", icon: <Linkedin className="w-5 h-5 text-sky-500" /> },
+            { to: user?.instagramURL || "https://instagram.com/eugenedevops", icon: <Instagram className="w-5 h-5 text-pink-500" /> },
+            { to: user?.facebookURL || "https://www.reddit.com/user/Dizzy_Blacksmith7686/", icon: <Facebook className="w-5 h-5 text-blue-700" /> },
+            { to: user?.linkedInURL || "https://www.linkedin.com/in/eugene-agesa-a7062840b/", icon: <Linkedin className="w-5 h-5 text-sky-500" /> },
             { to: user?.twitterURL || "#", icon: <Twitter className="w-5 h-5 text-blue-400" /> },
           ].map((s, i) => (
             <Link
